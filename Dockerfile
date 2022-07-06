@@ -1,31 +1,13 @@
-FROM alpine:edge as build
+FROM casjaysdev/bash:latest as build
 
 RUN apk --no-cache add --update \
-  vim \
-  bash \
-  curl \
-  ca-certificates \
-  git \
-  tmux \
-  util-linux \
-  pciutils \
-  usbutils \
-  coreutils \
-  binutils \
-  findutils \
-  grep \
-  iproute2 && \
-  ln -sf /bin/bash /bin/sh && \
-  mkdir -p /root/.vim/autoload /root/.vim/bundle /root/.cache/resurrect 
+  vim && \
+  mkdir -p /root/.vim/autoload /root/.vim/bundle 
 
-COPY ./config/resurrect/ /root/.cache/resurrect/
-COPY ./config/tmux.conf /config/.tmux.conf
-COPY ./config/bashrc /config/.bashrc
 COPY ./config/vimrc /config/.vimrc
 COPY ./bin/. /usr/local/bin/
 
-RUN /usr/local/bin/tmux-plugins \
-  curl -q -LSsf -o ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+RUN curl -q -LSsf -o ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
   vim -u "/config/.vimrc" -c ":BundleInstall" +qall </dev/null &>/dev/null && \
   vim -u "/config/.vimrc" -c ":PluginInstall" +qall </dev/null &>/dev/null && \
   vim -u "/config/.vimrc" -c ":PluginClean" +qall </dev/null &>/dev/null 

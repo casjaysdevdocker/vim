@@ -25,13 +25,13 @@ trap 'exitCode=${exitCode:-$?};[ -n "$ENTRYPOINT_SH_TEMP_FILE" ] && [ -f "$ENTRY
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __exec_bash() { [ -n "$1" ] && exec /bin/bash -l -c "${@:-bash}" || exec /bin/bash -l; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CONFIG_DIR="$(ls -A /config/ 2>/dev/null | grep '^' || false)"
 SHELL="${SHELL:-/bin/bash}"
 VIMRC="${VIMRC:-$HOME/.vimrc}"
 VIM_INDENT="${VIM_INDENT:-2}"
 TERM="${TERM:-xterm-256color}"
 HOSTNAME="${HOSTNAME:-casjaysdev-vim}"
 TZ="${TZ:-America/New_York}"
+CONFIG_DIR="$(ls -A /config/ 2>/dev/null | grep '^' || false)"
 export TZ HOSTNAME
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ -n "${TZ}" ] && echo "${TZ}" >/etc/timezone

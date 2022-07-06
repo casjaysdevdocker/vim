@@ -10,7 +10,7 @@ COPY ./bin/. /usr/local/bin/
 RUN curl -q -LSsf -o ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
   vim -u "/config/.vimrc" -c ":BundleInstall" +qall </dev/null &>/dev/null && \
   vim -u "/config/.vimrc" -c ":PluginInstall" +qall </dev/null &>/dev/null && \
-  vim -u "/config/.vimrc" -c ":PluginClean" +qall </dev/null &>/dev/null 
+  vim -u "/config/.vimrc" -c ":PluginClean" +qall </dev/null &>/dev/null
 
 FROM scratch
 

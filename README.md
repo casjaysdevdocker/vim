@@ -12,7 +12,7 @@ dockermgr install vim
 docker run -d \
 --restart always \
 --name vim \
---hostname vim \
+--hostname casjaysdev-vim \
 -e TZ=${TIMEZONE:-America/New_York} \
 -v $PWD/vim/data:/root \
 -v $PWD/vim/config:/etc/vim \
@@ -29,7 +29,7 @@ services:
     container_name: vim
     environment:
       - TZ=America/New_York
-      - HOSTNAME=vim
+      - HOSTNAME=casjaysdev-vim
     volumes:
       - $HOME/.local/share/docker/storage/vim/data:/root
       - $HOME/.local/share/docker/storage/vim/config:/etc/vim

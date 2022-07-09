@@ -25,7 +25,7 @@ casjaysdev/vim:latest
 version: "2"
 services:
   vim:
-    image: casjaysdev/vim
+    image: casjaysdevdocker/vim
     container_name: vim
     environment:
       - TZ=America/New_York

@@ -2,7 +2,7 @@ FROM casjaysdevdocker/bash:latest as build
 
 RUN apk --no-cache add --update \
   vim && \
-  mkdir -p /root/.vim/autoload /root/.vim/bundle 
+  mkdir -p /root/.vim/autoload /root/.vim/bundle
 
 COPY ./config/vimrc /config/.vimrc
 COPY ./bin/. /usr/local/bin/
@@ -14,7 +14,7 @@ RUN curl -q -LSsf -o ~/.vim/autoload/plug.vim --create-dirs https://raw.githubus
 
 FROM scratch
 
-ARG BUILD_DATE="$(date +'%Y-%m-%d %H:%M')" 
+ARG BUILD_DATE="$(date +'%Y-%m-%d %H:%M')"
 
 LABEL \
   org.label-schema.name="vim" \
@@ -28,7 +28,7 @@ LABEL \
   org.label-schema.vcs-type="Git" \
   org.label-schema.schema-version="latest" \
   org.label-schema.vendor="CasjaysDev" \
-  maintainer="CasjaysDev <docker-admin@casjaysdev.com>" 
+  maintainer="CasjaysDev <docker-admin@casjaysdev.com>"
 
 ENV VIM_INDENT="2" \
   VIMRC="/root/.vimrc" \
@@ -42,6 +42,6 @@ VOLUME ["/root","/config"]
 
 COPY --from=build /. /
 
-HEALTHCHECK CMD [ "/usr/local/bin/entrypoint-vim.sh", "healthcheck" ]
+HEALTHCHECK --interval=15s --timeout=3s CMD [ "/usr/local/bin/entrypoint-vim.sh", "healthcheck" ]
 ENTRYPOINT [ "/usr/local/bin/entrypoint-vim.sh" ]
 CMD [ "/usr/bin/tmux" ]

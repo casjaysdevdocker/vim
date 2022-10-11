@@ -13,15 +13,15 @@
 # @Other         :
 # @Resource      :
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Set bash options
+[ -n "$DEBUG" ] && set -x
+set -o pipefail
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 APPNAME="$(basename "$0")"
 VERSION="202202021753-git"
 USER="${SUDO_USER:-${USER}}"
 HOME="${USER_HOME:-${HOME}}"
 SRC_DIR="${BASH_SOURCE%/*}"
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Set bash options
-if [[ "$1" == "--debug" ]]; then shift 1 && set -xo pipefail && export SCRIPT_OPTS="--debug" && export _DEBUG="on"; fi
-trap 'exitCode=${exitCode:-$?};[ -n "$ENTRYPOINT_SH_TEMP_FILE" ] && [ -f "$ENTRYPOINT_SH_TEMP_FILE" ] && rm -Rf "$ENTRYPOINT_SH_TEMP_FILE" &>/dev/null' EXIT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __exec_bash() { [ -n "$1" ] && exec /bin/bash -l -c "${@:-bash}" || exec /bin/bash -l; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,43 +1,79 @@
-# vim Readme 👋
+## 👋 Welcome to vim 🚀  
 
-Vim is a highly configurable text editor
-
-## Run container
-
-dockermgr install vim
-
-### via command line
+vim README  
+  
+  
+## Install my system scripts  
 
 ```shell
+ sudo bash -c "$(curl -q -LSsf "https://github.com/systemmgr/installer/raw/main/install.sh")"
+ sudo systemmgr --config && sudo systemmgr install scripts  
+```
+  
+## Automatic install/update  
+  
+```shell
+dockermgr update vim
+```
+  
+## Install and run container
+  
+```shell
+dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/vim/vim/latest/rootfs"
+mkdir -p "/var/lib/srv/$USER/docker/vim/rootfs"
+git clone "https://github.com/dockermgr/vim" "$HOME/.local/share/CasjaysDev/dockermgr/vim"
+cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/vim/rootfs/." "$dockerHome/"
 docker run -d \
 --restart always \
---name vim \
---hostname casjaysdev-vim \
+--privileged \
+--name casjaysdevdocker-vim-latest \
+--hostname vim \
 -e TZ=${TIMEZONE:-America/New_York} \
--v $PWD/vim/data:/root \
--v $PWD/vim/config:/etc/vim \
-casjaysdev/vim:latest
+-v "$dockerHome/data:/data:z" \
+-v "$dockerHome/config:/config:z" \
+-p 80:80 \
+casjaysdevdocker/vim:latest
 ```
-
-### via docker-compose
-
+  
+## via docker-compose  
+  
 ```yaml
 version: "2"
 services:
-  vim:
+  ProjectName:
     image: casjaysdevdocker/vim
-    container_name: vim
+    container_name: casjaysdevdocker-vim
     environment:
       - TZ=America/New_York
-      - HOSTNAME=casjaysdev-vim
+      - HOSTNAME=vim
     volumes:
-      - $HOME/.local/share/docker/storage/vim/data:/root
-      - $HOME/.local/share/docker/storage/vim/config:/etc/vim
-    restart: 
-      - always
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/vim/vim/latest/rootfs/data:/data:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/vim/vim/latest/rootfs/config:/config:z"
+    ports:
+      - 80:80
+    restart: always
 ```
-
+  
+## Get source files  
+  
+```shell
+dockermgr download src casjaysdevdocker/vim
+```
+  
+OR
+  
+```shell
+git clone "https://github.com/casjaysdevdocker/vim" "$HOME/Projects/github/casjaysdevdocker/vim"
+```
+  
+## Build container  
+  
+```shell
+cd "$HOME/Projects/github/casjaysdevdocker/vim"
+buildx 
+```
+  
 ## Authors  
-
-🤖 Casjay: [Github](https://github.com/casjay) [Docker](https://hub.docker.com/casjay) 🤖  
-⛵ CasjaysDev: [Github](https://github.com/casjaysdev) [Docker](https://hub.docker.com/casjaysdev) ⛵  
+  
+🤖 casjay: [Github](https://github.com/casjay) 🤖  
+⛵ casjaysdevdocker: [Github](https://github.com/casjaysdevdocker) [Docker](https://hub.docker.com/u/casjaysdevdocker) ⛵  
